@@ -1,5 +1,6 @@
-*This is part of the Project ft_transcendence of the 42 curriculum*
-*author: dvavryn(Dominic Vavryn)*
+*This is part of the Project ft_transcendence of the 42 curriculum*<br/>
+*API author: dvavryn(Dominic Vavryn)*<br/>
+*Project members: dvavryn, hanjkim, dplotzl, oohnivch*<br/>
 <hr/>
 
 # GOTTA-GO-FAST-API
