@@ -20,14 +20,6 @@ Recompile in debug mode to see better debug messages!
 
 
 ### Makefile
-```bash
-make
-make all
-make build
-make run
-make debug
-make clean
-```
 ||description|
 |---|---|
 |make|compiles main.go to .bin|
