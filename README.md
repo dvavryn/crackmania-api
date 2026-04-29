@@ -10,7 +10,7 @@ The gotta-go-fast-api is and AI that calculates the controll inputs of  the AI o
 
 ## Usage
 ```bash
-./gotta-go-fast-api
+./gotta-go-fast-api.bin
 ```
 Server needs to be started before the game can be started!
 Start API -> Open Game -> look what is happening
