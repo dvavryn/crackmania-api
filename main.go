@@ -21,7 +21,11 @@ type AIFrame struct {
 }
 
 type AIResponse struct {
-	Commands []string `json:"commands:`
+	Forward  bool `json:"forward"`
+	Backward bool `json:"backward"`
+	Left     bool `json:"left"`
+	Right    bool `json:"right"`
+	// Commands []string `json:"commands:`
 }
 
 var upgrader = websocket.Upgrader{
@@ -30,10 +34,10 @@ var upgrader = websocket.Upgrader{
 	},
 }
 
-func decideCommands(frame AIFrame) []string {
-	commands := []string{}
-	commands = append(commands, "forward")
-	return commands
+func decideCommands(frame AIFrame) AIResponse {
+	var out AIResponse
+	out.Forward = true
+	return out
 }
 
 func wsHandler(c *gin.Context) {
@@ -59,7 +63,7 @@ func wsHandler(c *gin.Context) {
 
 		commands := decideCommands(frame)
 
-		resp, _ := json.Marshal(AIResponse{Commands: commands})
+		resp, _ := json.Marshal(commands)
 		if err := conn.WriteMessage(websocket.TextMessage, resp); err != nil {
 			fmt.Println("Write error:", err)
 			break

@@ -15,6 +15,8 @@ debug:
 	go build -ldflags="-X 'main.buildMode=debug'" -o $(NAME)
 
 clean:
-	rm $(NAME)
+	rm -rf $(NAME)
+
+re: clean build
 
 .PHONY: all build run debug clean
