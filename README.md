@@ -1,5 +1,6 @@
-*This is part of the Project ft_transcendence of the 42 curriculum*
-*author: dvavryn(Dominic Vavryn)*
+*This is part of the Project ft_transcendence of the 42 curriculum*<br/>
+*API author: dvavryn(Dominic Vavryn)*<br/>
+*Project members: dvavryn, hanjkim, dplotzl, oohnivch*<br/>
 <hr/>
 
 # GOTTA-GO-FAST-API
@@ -20,14 +21,6 @@ Recompile in debug mode to see better debug messages!
 
 
 ### Makefile
-```bash
-make
-make all
-make build
-make run
-make debug
-make clean
-```
 ||description|
 |---|---|
 |make|compiles main.go to .bin|
