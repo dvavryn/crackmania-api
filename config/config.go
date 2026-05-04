@@ -1,25 +1,28 @@
 package config
 
-type Car struct {
-	Mass        int
-	Size        [3]float64
-	WhileRadius float64
-}
+import (
+	"encoding/json"
+	"io"
+	"os"
+)
 
-type Engine struct {
-force int
-differential int
-revForceRatio int
-brakeForce int
-coastBrakeForce int
-frontBrakeBias int
-reverseThreshold int
-}
+func GetConfig() (Config, error) {
+	var out Config
 
-type Steering struct {
-	MaxSteer float64
-	MinSteer float64
-	SteerSpeedMax int
-}
+	jsonFile, err := os.Open("./config.json")
+	if err != nil {
+		return Config{}, err
+	}
+	defer jsonFile.Close()
 
-type Suspension
+	bytes, err := io.ReadAll(jsonFile)
+	if err != nil {
+		return Config{}, err
+	}
+
+	if err = json.Unmarshal(bytes, &out); err != nil {
+		return Config{}, err
+	}
+
+	return out, nil
+}
