@@ -35,18 +35,41 @@ func closestT(p0, p1, p2, p3, car [3]float64) float64 {
 
 func Calculate(f AIFrame, cnf config.Config) AIResponse {
 	var out AIResponse
-	vx := f.Velocity[0]
-	vy := f.Velocity[1]
-	vz := f.Velocity[2]
+	for i := range 15 {
+		fmt.Println()
+		_ = i
+	}
 
-	px := f.Position[0]
-	py := f.Position[1]
-	pz := f.Position[2]
-	fmt.Println("px:", px, "py:", py, "pz", pz)
-	qx := f.Quaternion[0]
-	qy := f.Quaternion[1]
-	qz := f.Quaternion[2]
-	qw := f.Quaternion[3]
+	// position x, y, z
+	px, py, pz := f.Position[0], f.Position[1], f.Position[2]
+	fmt.Printf("pos\t%v\t%v\t%v\n", px, py, pz)
+
+	// quaternion x, y, z, w
+	qx, qy, qz, qw := f.Quaternion[0], f.Quaternion[1], f.Quaternion[2], f.Quaternion[3]
+	fmt.Printf("quat\t%v\t%v\t%v\t%v\n", qx, qy, qz, qw)
+
+	// velocity x, y, z
+	vx, vy, vz := f.Velocity[0], f.Velocity[1], f.Velocity[2]
+	fmt.Printf("vel\t%v\t%v\t%v\n", vx, vy, vz)
+
+	// current checkpoint, total checkpoints
+	cc, ct := f.CurrentCheckpoint, f.TotalCheckpoints
+	fmt.Printf("cp\t%v / %v\n", cc, ct)
+
+	var cp0 []float64
+	cp0 = append(cp0, f.Checkpoints["0"][0], f.Checkpoints["0"][1], f.Checkpoints["0"][2])
+	fmt.Printf("cp+0\t%v\t%v\t%v\n", cp0[0], cp0[1], cp0[2])
+
+	var cp1 []float64
+	cp1 = append(cp1, f.Checkpoints["1"][0], f.Checkpoints["1"][1], f.Checkpoints["1"][2])
+	fmt.Printf("cp+1\t%v\t%v\t%v\n", cp1[0], cp1[1], cp1[2])
+
+	var cp2 []float64
+	cp2 = append(cp2, f.Checkpoints["2"][0], f.Checkpoints["2"][1], f.Checkpoints["2"][2])
+	fmt.Printf("cp+2\t%v\t%v\t%v\n", cp2[0], cp2[1], cp2[2])
+
+	speed := math.Sqrt(vx*vx + vy*vy + vz*vz)
+	fmt.Printf("speed\t%.1f\n", speed)
 
 	fx := 2 * (qx*qz + qw*qy)
 	fz := 1 - 2*(qx*qx+qy*qy)
@@ -70,49 +93,21 @@ func Calculate(f AIFrame, cnf config.Config) AIResponse {
 	}
 
 	dot := fx*dx + fz*dz
-	cross := fx*dz - fz*dx
+	cross := fz*dx - fx*dz
 	angle := math.Atan2(cross, dot)
 
-	if angle > 0.1 {
+	fmt.Printf("\nang: %v\n", angle)
+	if angle > 0.2 {
 		out.Right = true
-	} else if angle < -0.1 {
+	} else if angle < -0.2 {
 		out.Left = true
 	}
 
-	speed := math.Sqrt(vx*vx + vy*vy + vz*vz)
 	// out.Forward = dot > 0
 	// out.Backward = dot <= 0 && speed < float64(cnf.DriveTrain.ReverseThreshold)
-	if speed < 5 {
+	if speed < 80 {
 		out.Forward = true
 	}
 
 	return out
 }
-
-/*
-
-Algorithm:
-	1. Read frame-input:
-		position, quaternion, velocity
-	2. Extract forward vector
-		rotate world fwd by quaterion
-	3. Vector to target checkpoint
-		nectCheckpoint - position
-	4. Dot product
-		fwd * cp_normalized -> ahead or behind?
-	5. Signed steer error
-		atan2(cross, dot) -> left or right?
-	6. Forward speed
-		speed * dot -> moving forward or back?
-	7. Map to outputs
-		forward
-			dot > 0 & fwdSpeed ok
-		backward
-			dot < 0 or stuck
-		left
-			steerErr < -deadzone
-		right steerErr > +deadzone
-	8. Emit frame-output
-	9. step 1
-
-*/
