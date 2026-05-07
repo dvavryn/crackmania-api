@@ -48,7 +48,7 @@ func wsHandler(c *gin.Context) {
 			continue
 		}
 
-		commands := ai.Calculate(frame, cnf)
+		commands := ai.Calculate(frame, cnf, buildMode)
 
 		resp, _ := json.Marshal(commands)
 		if err := conn.WriteMessage(websocket.TextMessage, resp); err != nil {

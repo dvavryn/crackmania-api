@@ -44,7 +44,7 @@ type Wheels struct {
 	WheelMass                       float64 `json:"wheelMass"`
 }
 
-type WheelGeometryFactors struct { // multiplied against chassis dimensions
+type WheelGeometryFactors struct { // multiplied against chassis dimensionslea
 	WheelHeightFactor         float64 `json:"wheelHeightFactor"`
 	WheelWidthFactor          float64 `json:"wheelWidthFactor"`
 	WheelFrontOffsetFactor    float64 `json:"wheelFrontOffsetFactor"`
