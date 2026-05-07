@@ -2,7 +2,6 @@ package ai
 
 import (
 	"fmt"
-	"gotta-go-fast-api/config"
 	"math"
 )
 
@@ -34,7 +33,8 @@ func closestT(p0, p1, p2, p3, car [3]float64) float64 {
 	return out
 }
 
-func Calculate(f AIFrame, cnf config.Config, buildMode string) AIResponse {
+// func Calculate(f AIFrame, cnf config.Config, buildMode string) AIResponse { // old -- config!!!
+func Calculate(f AIFrame, buildMode string) AIResponse {
 	// Unpack frame fields
 	px, py, pz := f.Position[0], f.Position[1], f.Position[2]
 	qx, qy, qz, qw := f.Quaternion[0], f.Quaternion[1], f.Quaternion[2], f.Quaternion[3]

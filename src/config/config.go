@@ -7,7 +7,7 @@ import (
 )
 
 func GetConfig() (Config, error) {
-	jsonFile, err := os.Open("./config.json")
+	jsonFile, err := os.Open("/configs/config.json")
 	if err != nil {
 		return Config{}, err
 	}

@@ -6,7 +6,6 @@ import (
 	"net/http"
 
 	"gotta-go-fast-api/ai"
-	"gotta-go-fast-api/config"
 
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
@@ -43,16 +42,17 @@ func wsHandler(c *gin.Context) {
 			continue
 		}
 
-		// Load config
-		var cnf config.Config
-		cnf, err = config.GetConfig()
-		if err != nil {
-			fmt.Println("Parse error:", err)
-			continue
-		}
+		// // Load config
+		// var cnf config.Config
+		// cnf, err = config.GetConfig()
+		// if err != nil {
+		// 	fmt.Println("Parse error:", err)
+		// 	continue
+		// }
 
 		// Compute and send AI response
-		commands := ai.Calculate(frame, cnf, buildMode)
+		// commands := ai.Calculate(frame, cnf, buildMode) // old -- config!!!
+		commands := ai.Calculate(frame, buildMode)
 		resp, _ := json.Marshal(commands)
 		if err := conn.WriteMessage(websocket.TextMessage, resp); err != nil {
 			fmt.Println("Write error:", err)
