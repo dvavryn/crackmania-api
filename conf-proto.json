@@ -1,0 +1,73 @@
+// options:
+{
+	"chassis": {
+		"mass": float,
+		"width": float,
+		"height": float,
+		"length": float,
+		"wheelRadius": float
+	},
+	"drivetrain": {
+		"force": float,
+		"differential": float,
+		"revForceRation": float,
+		"brakeForce": float,
+		"coastBrakeForce": float,
+		"frontBrakeBias": float,
+		"reverseThreshold": float
+	},
+	"steering": {
+		"maxSteer": float,
+		"minSteer": float,
+		"steerSpeedMax": float
+	},
+	"suspension": {
+		"suspensionStiffness": float,
+		"suspensionRestLength": float,
+		"dampingRelaxation": float,
+		"dampingCompression": float,
+		"maxSuspensionForce": float,
+		"rollInfluence": float,
+		"maxSuspensionTravel": float
+	},
+	"wheels": {
+		"rearFrictionSlip": float,
+		"frontFrictionSlip": float,
+		"custumSlidingRotationalSpeed": float,
+		"useCustomSlidingRotationalSpeed": bool,
+		"wheelCylinderThickness": float,
+		"wheelCylinderSegments": float,
+		"wheelMass": float
+	},
+	"wheelGeometryFactors": {
+		"wheelHeightFactor": float,
+		"wheelWidthFactor": float,
+		"wheelFrontOffsetFactor": float,
+		"wheelRearOffsetFactor": float,
+		"frontWheelWidthMultiplier": float
+	}
+}
+
+
+frame-input:
+{
+	"position": [float, float, float],
+	"quaternion": [float, float, float, float],
+	"velocity": [float, float, float],
+	"totalCheckpoints": int,
+	"currentCheckpoint": int,
+	"checkPoints": {
+		"0": [float, float, float],
+		"1": [float, float, float],
+		"2": [float, float, float]
+	}
+}
+
+
+frame-output:
+{
+	"forward": bool,
+	"backward": bool,
+	"left": bool,
+	"right": bool
+}
