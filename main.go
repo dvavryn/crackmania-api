@@ -29,18 +29,21 @@ func wsHandler(c *gin.Context) {
 	defer conn.Close()
 
 	for {
+		// Read incoming message
 		_, msg, err := conn.ReadMessage()
 		if err != nil {
 			fmt.Println("Read error:", err)
 			break
 		}
 
+		// Parse game frame
 		var frame ai.AIFrame
 		if err := json.Unmarshal(msg, &frame); err != nil {
 			fmt.Println("Parse error:", err)
 			continue
 		}
 
+		// Load config
 		var cnf config.Config
 		cnf, err = config.GetConfig()
 		if err != nil {
@@ -48,8 +51,8 @@ func wsHandler(c *gin.Context) {
 			continue
 		}
 
+		// Compute and send AI response
 		commands := ai.Calculate(frame, cnf, buildMode)
-
 		resp, _ := json.Marshal(commands)
 		if err := conn.WriteMessage(websocket.TextMessage, resp); err != nil {
 			fmt.Println("Write error:", err)
@@ -67,12 +70,9 @@ func main() {
 	}
 
 	r := gin.Default()
-
 	r.GET("/ping", func(c *gin.Context) {
 		c.JSON(200, gin.H{"message": "pong"})
 	})
-
 	r.GET("/AI", wsHandler)
-
 	r.Run(":8765")
 }

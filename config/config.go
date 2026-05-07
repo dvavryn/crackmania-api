@@ -7,8 +7,6 @@ import (
 )
 
 func GetConfig() (Config, error) {
-	var out Config
-
 	jsonFile, err := os.Open("./config.json")
 	if err != nil {
 		return Config{}, err
@@ -20,6 +18,7 @@ func GetConfig() (Config, error) {
 		return Config{}, err
 	}
 
+	var out Config
 	if err = json.Unmarshal(bytes, &out); err != nil {
 		return Config{}, err
 	}
