@@ -30,3 +30,18 @@ Recompile in debug mode to see better debug messages!
 |make debug|compiles .bin in debug mode|
 |make clean|deletes .bin|
 
+## Tree
+.
+├── Dockerfile
+├── src
+│   ├── ai
+│   │   ├── ai.go
+│   │   └── structs.go
+│   ├── config
+│   │   ├── config.go
+│   │   └── structs.go
+│   ├── main.go
+│   ├── go.mod
+│   ├── go.sum
+│   └── Makefile
+└── config.json
